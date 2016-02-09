@@ -13,7 +13,6 @@
   <link rel="stylesheet" href="css/font-awesome.css">
   <script src="javascripts/libs.js" type="text/javascript"></script>
   <script>
-  // terrificjs bootstrap
   (function($) {
     $(document).ready(function() {
       var $page = $('body');
@@ -33,7 +32,7 @@
   <script src="javascripts/imagesloaded.pkgd.min.js" type="text/javascript"></script>
   <script src="javascripts/slick.min.js" type="text/javascript"></script>
   <style>
-  #map {
+  #map-canvas {
     height: 400px;
   }
   
@@ -41,24 +40,7 @@
     display: none;
   }
   </style>
-  <script src="https://maps.googleapis.com/maps/api/js"></script>
-  <script>
-  function initialize() {
-    var mapCanvas = document.getElementById('map');
-    var mapOptions = {
-      center: new google.maps.LatLng(33.650860, 72.964486),
-      zoom: 17,
-      scrollwheel: false,
-      navigationControl: false,
-      mapTypeControl: false,
-      scaleControl: false,
-      draggable: false,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    }
-    var map = new google.maps.Map(mapCanvas, mapOptions)
-  }
-  google.maps.event.addDomListener(window, 'load', initialize);
-  </script>
+  <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?sensor=false"></script>
 </head>
 
 <body>
@@ -111,7 +93,50 @@
   </div>
   <div id='main' role='main'>
     <div class='full no-padding'>
-      <div id="map"></div>
+      <div id="map-canvas"></div>
+      <script>
+      function initialise() {
+
+        var myLatlng = new google.maps.LatLng(33.650860, 72.964486);
+        var mapOptions = {
+          zoom: 16,
+          minZoom: 6,
+          maxZoom: 17,
+          zoomControl: true,
+          zoomControlOptions: {
+            style: google.maps.ZoomControlStyle.DEFAULT
+          },
+          center: myLatlng,
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+          scrollwheel: false,
+          panControl: false,
+          mapTypeControl: false,
+          scaleControl: false,
+          streetViewControl: false,
+          overviewMapControl: false,
+          rotateControl: false
+        }
+        var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+        var marker = new google.maps.Marker({
+          position: myLatlng,
+          map: map,
+          title: 'Click to visit our company on Google Places'
+        });
+
+        var infowindow = new google.maps.InfoWindow({
+          content: "<h3>The Xpert Tech</h3><p>G-13, Islamabad</p>"
+        });
+
+        google.maps.event.addListener(marker, 'click', function() {
+          infowindow.open(map, marker);
+        });
+
+        google.maps.event.addDomListener(window, 'resize', function() {
+          map.setCenter(myLatlng);
+        });
+      }
+      google.maps.event.addDomListener(window, 'load', initialise);
+      </script>
       <div class='spacing'></div>
       <div class='row'>
         <div class='medium-8 columns'>
