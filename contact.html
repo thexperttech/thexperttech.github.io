@@ -94,7 +94,7 @@
   <div id='main' role='main'>
     <div class='full no-padding'>
       <div id="map-canvas"></div>
-      <script>
+      <script type="text/javascript">
       function initialise() {
 
         var myLatlng = new google.maps.LatLng(33.650860, 72.964486);
@@ -120,11 +120,11 @@
         var marker = new google.maps.Marker({
           position: myLatlng,
           map: map,
-          title: 'Click to visit our company on Google Places'
+          title: 'Click to view our company address.'
         });
 
         var infowindow = new google.maps.InfoWindow({
-          content: "<h3>The Xpert Tech</h3><p>G-13, Islamabad</p>"
+          content: "<h3>The Xpert Tech</h3><p>G-13, Islamabad.</p><a href='https://maps.google.com/maps?q=33.65086,72.964486&amp;z=16&amp;t=m' target='_blank' >View Larger Map</a>"
         });
 
         google.maps.event.addListener(marker, 'click', function() {
